@@ -29,9 +29,9 @@ class MatchRepository extends ServiceEntityRepository
         $sql = "SELECT 
                     COUNT(user_win) AS wins,
                     user_name AS userName
-                FROM match 
+                FROM match
                 GROUP BY user_name
-                ORDER BY user_win DESC";
+                ORDER BY wins DESC";
         
         $statement = $connection->prepare($sql);
         $statement->execute();
