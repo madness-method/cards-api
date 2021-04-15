@@ -33,6 +33,12 @@ class GameController extends AbstractController
     {
         $requestJson   = $request->getContent();
         $requestObject = json_decode($requestJson);
+        $validRequest  = $this->validateRequest($requestObject->payload);
+
+        if ( ! $validRequest) {
+            return new Response('Invalid match parameters.');
+        }
+
         $userName      = $requestObject->payload->userName;
         $userScore     = $requestObject->payload->userScore;
         $userWin       = $requestObject->payload->userWin;
@@ -49,6 +55,23 @@ class GameController extends AbstractController
         $em->persist($match);
         $em->flush();
 
-        return new Response('Match outcome successfully recorded.');;
+        return new Response('Match outcome successfully recorded.');
+    }
+
+    private function validateRequest($payload) : bool
+    {
+        if (empty($payload->userName)) {
+            return false;
+        }
+
+        if ($payload->userWin != 1 && $payload->userWin != 0) {
+            return false;
+        }
+
+        if (is_null($payload->userScore) || is_null($payload->cpuScore)) {
+            return false;
+        }
+
+        return true;
     }
 }
