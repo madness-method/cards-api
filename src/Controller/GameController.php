@@ -39,16 +39,11 @@ class GameController extends AbstractController
             return new Response('Invalid match parameters.');
         }
 
-        $userName      = $requestObject->payload->userName;
-        $userScore     = $requestObject->payload->userScore;
-        $userWin       = $requestObject->payload->userWin;
-        $cpuScore      = $requestObject->payload->cpuScore;
-
         $match = new Match();
-        $match->setUserName($userName);
-        $match->setUserScore($userScore);
-        $match->setUserWin($userWin);
-        $match->setCpuScore($cpuScore);
+        $match->setUserName($requestObject->payload->userName);
+        $match->setUserScore($requestObject->payload->userScore);
+        $match->setUserWin($requestObject->payload->userWin);
+        $match->setCpuScore($requestObject->payload->cpuScore);
         $match->setCreated(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
