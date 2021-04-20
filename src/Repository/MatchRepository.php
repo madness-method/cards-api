@@ -31,7 +31,8 @@ class MatchRepository extends ServiceEntityRepository
                     user_name AS userName
                 FROM match
                 GROUP BY user_name
-                ORDER BY wins DESC";
+                ORDER BY wins DESC
+                LIMIT 10";
         
         $statement = $connection->prepare($sql);
         $statement->execute();
